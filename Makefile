@@ -9,7 +9,6 @@ SHELL := /bin/bash
 	check_package_versions
 
 check_package_versions:
-	exa --version      | grep "^v0\."
 	neofetch --version | grep "^Neofetch 7\."
 	nvim --version     | grep "^NVIM v0.10\."
 	rich --version     | grep "^1\."
