@@ -1,4 +1,13 @@
-# Configura tu cliente liviano
+# Cliente liviano para desarrollo remoto
+
+## Prerequisitos
+
+Si estas usando un cliente liviano es porque ya existe el **servidor de desarrollo**. El servidor de desarrollo es provisto por el **servidor provisionador**.
+
+- [Servidor provisionador](https://github.com/IslasGECI/provisioner)
+- [Servidor de desarrollo](https://github.com/IslasGECI/development_server_setup)
+
+## Configura tu cliente liviano
 
 1. Crea tu clave SSH con: `ssh-keygen`
 1. Agrega tu clave SSH al agente para hacer _forwarding_
@@ -41,36 +50,7 @@
     ```
 1. Agrega tu [bóveda secreta](https://docs.google.com/document/d/1lY7ycXs4J8wp1OyJCmPsvfB7YdQqscqL52cIZxBP6Rw/).
 
-## En DigitalOcean
-
-Crea una Droplet llamada `provisioner`.
-
-## Desde tu cliente liviano copia las credenciales hacia el servidor `provisioner`
-
-```shell
-export PROVISIONER_IP=<PROVISIONER IP>
-scp ~/.ssh/id_rsa root@$PROVISIONER_IP:/root/.ssh/
-```
-
-## Desde el servidor `provisioner` crea y configura el servidor `devserver`
-
-1. Entra con: `ssh root@$PROVISIONER_IP`
-1. Ejecuta:
-    ```shell
-    sudo apt update && sudo apt install --yes docker.io
-    docker pull islasgeci/development_server_setup:latest
-    export DO_PAT=<Token de DigitalOcean>
-    docker run \
-        --env DO_PAT \
-        --interactive \
-        --rm \
-        --tty \
-        --volume ${HOME}/.ssh/id_rsa:/root/.ssh/id_rsa \
-        islasgeci/development_server_setup:latest make
-    ```
-1. Destruye el servidor `provisioner`
-
-## En tu cliente liviano copia las credenciales hacia el servidor `devserver`
+## Desde tu cliente liviano copia las credenciales hacia el servidor de desarrollo
 
 ```shell
 ssh-keygen -f "$HOME/.ssh/known_hosts" -R "islasgeci.dev"
@@ -80,7 +60,7 @@ scp -pr ~/.vault $DEVELOPER@islasgeci.dev:/home/$DEVELOPER/.vault
 scp ~/todo.md $DEVELOPER@islasgeci.dev:/home/$DEVELOPER/todo.md
 ```
 
-Finalmente, entra al `devserver` con: `ssh -o ForwardAgent=yes $DEVELOPER@islasgeci.dev`[^forward].
+Finalmente, entra al servidor de desarrollo con: `ssh -o ForwardAgent=yes $DEVELOPER@islasgeci.dev`[^forward].
 
 [^forward]:
     Alternativamente, puedes agregar la opción `ForwardAgent yes` a `~/.ssh/config` en tu cliente liviano:
