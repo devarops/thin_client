@@ -1,0 +1,10 @@
+---
+- name: Install software using package managers
+  hosts: devserver
+  tasks:
+    - name: Neovim
+      ansible.builtin.apt:
+        name: "nvim"
+        state: present
+      become: true
+
