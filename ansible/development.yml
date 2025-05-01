@@ -3,8 +3,7 @@
   hosts: devserver
   tasks:
     - name: Neovim
-      ansible.builtin.apt:
-        name: "nvim"
-        state: present
+      community.general.snap:
+        name: nvim
+        classic: true
       become: true
-
