@@ -2,10 +2,11 @@
 
 ## Prerequisitos
 
-Si estas usando un cliente liviano es porque ya existe el **servidor de desarrollo**. El servidor de desarrollo es provisto por el **servidor provisionador**.
+Si estas usando un cliente liviano es porque ya existe el **servidor de desarrollo**. El servidor de desarrollo es provisto por el **provisionador**.
 
-- [Servidor provisionador](https://github.com/IslasGECI/provisioner)
 - [Servidor de desarrollo](https://github.com/IslasGECI/development_server_setup)
+- [Provisionador (servidor)](https://github.com/IslasGECI/provisioner)
+
 
 ## Configura tu cliente liviano
 
@@ -59,8 +60,12 @@ export DEVELOPER=<Tu nombre de usuario del servidor>
 scp -pr ~/.vault $DEVELOPER@islasgeci.dev:/home/$DEVELOPER/.vault
 scp ~/todo.md $DEVELOPER@islasgeci.dev:/home/$DEVELOPER/todo.md
 ```
-
-Finalmente, entra al servidor de desarrollo con: `ssh -o ForwardAgent=yes $DEVELOPER@islasgeci.dev`[^forward].
+1. Desde tu cliente liviano, configura el servidor de desarrollo
+```shell
+cd ~/repositorios/thin_client
+make setup_server
+```
+1. Finalmente, entra al servidor de desarrollo con: `ssh -o ForwardAgent=yes $DEVELOPER@islasgeci.dev`[^forward].
 
 [^forward]:
     Alternativamente, puedes agregar la opción `ForwardAgent yes` a `~/.ssh/config` en tu cliente liviano:
@@ -69,6 +74,8 @@ Finalmente, entra al servidor de desarrollo con: `ssh -o ForwardAgent=yes $DEVEL
       ForwardAgent yes
     ```
     Revisa [este ejemplo](https://github.com/devarops/dotfiles/blob/develop/.ssh/config).
+
+---
 
 ## Opcional: En tu cliente liviano monta los repositorios del servidor
 
