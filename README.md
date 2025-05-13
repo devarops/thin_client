@@ -25,7 +25,7 @@ Si estas usando un cliente liviano es porque ya existe el **servidor de desarrol
     ```shell
     mkdir --parents ~/repositorios/
     ```
-1. Verifica instalación:
+1. Verifica que tu cliente liviano cuenta con el softare requerido
     ```shell
     cd ~/repositorios/
     git clone git@github.com:devarops/thin_client.git
