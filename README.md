@@ -51,18 +51,23 @@ Si estas usando un cliente liviano es porque ya existe el **servidor de desarrol
     ```
 1. Agrega tu [bóveda secreta](https://docs.google.com/document/d/1lY7ycXs4J8wp1OyJCmPsvfB7YdQqscqL52cIZxBP6Rw/).
 1. Copia las credenciales hacia el servidor de desarrollo
-```shell
-ssh-keygen -f "$HOME/.ssh/known_hosts" -R "islasgeci.dev"
-ssh-keyscan "islasgeci.dev" >> "$HOME/.ssh/known_hosts"
-export DEVELOPER=<Tu nombre de usuario del servidor>
-scp -pr ~/.vault $DEVELOPER@islasgeci.dev:/home/$DEVELOPER/.vault
-scp ~/todo.md $DEVELOPER@islasgeci.dev:/home/$DEVELOPER/todo.md
-```
+    ```shell
+    ssh-keygen -f "$HOME/.ssh/known_hosts" -R "islasgeci.dev"
+    ssh-keyscan "islasgeci.dev" >> "$HOME/.ssh/known_hosts"
+    export DEVELOPER=<Tu nombre de usuario del servidor>
+    scp -pr ~/.vault $DEVELOPER@islasgeci.dev:/home/$DEVELOPER/.vault
+    scp ~/todo.md $DEVELOPER@islasgeci.dev:/home/$DEVELOPER/todo.md
+    ```
+1. Crea el archivo `/etc/ansible/hosts` con el siguiente contenido:
+    ```shell
+    [servers]
+    devserver ansible_host=islasgeci.dev ansible_user=evaro ansible_become_password="{{ lookup('env', 'DEVSERVER_SUDO_PASSWORD') }}"
+    ```
 1. Desde tu cliente liviano, configura el servidor de desarrollo
-```shell
-cd ~/repositorios/thin_client
-make setup_server
-```
+    ```shell
+    cd ~/repositorios/thin_client
+    make setup_server
+    ```
 1. Finalmente, entra al servidor de desarrollo con: `ssh -o ForwardAgent=yes $DEVELOPER@islasgeci.dev`[^forward].
 
 [^forward]:
