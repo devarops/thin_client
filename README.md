@@ -50,9 +50,7 @@ Si estas usando un cliente liviano es porque ya existe el **servidor de desarrol
     make install
     ```
 1. Agrega tu [bóveda secreta](https://docs.google.com/document/d/1lY7ycXs4J8wp1OyJCmPsvfB7YdQqscqL52cIZxBP6Rw/).
-
-## Desde tu cliente liviano copia las credenciales hacia el servidor de desarrollo
-
+1. Copia las credenciales hacia el servidor de desarrollo
 ```shell
 ssh-keygen -f "$HOME/.ssh/known_hosts" -R "islasgeci.dev"
 ssh-keyscan "islasgeci.dev" >> "$HOME/.ssh/known_hosts"
