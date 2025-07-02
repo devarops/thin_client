@@ -7,3 +7,8 @@
         name: nvim
         classic: true
       become: true
+    - name: Install Neofetch
+      ansible.builtin.apt:
+        name: neofetch
+        state: present
+      become: true
