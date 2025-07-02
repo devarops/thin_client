@@ -10,6 +10,7 @@ SHELL := /bin/bash
 
 check_package_versions:
 	ansible --version  | grep "core 2\."
+	batcat --version   | grep "^bat 0\."
 	neofetch --version | grep "^Neofetch 7\."
 	nvim --version     | grep "^NVIM v0.11\."
 	rich --version     | grep "^1\."

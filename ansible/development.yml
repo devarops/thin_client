@@ -12,3 +12,8 @@
         name: neofetch
         state: present
       become: true
+    - name: Install bat (batcat)
+      ansible.builtin.apt:
+        name: bat
+        state: present
+      become: true
