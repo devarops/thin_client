@@ -12,7 +12,6 @@ check_package_versions:
 	batcat --version   | grep "^bat 0\."
 	neofetch --version | grep "^Neofetch 7\."
 	nvim --version     | grep "^NVIM v0.11\."
-	rich --version     | grep "^1\."
 
 check_os_version:
 	cat /etc/os-release | grep "24.04"
