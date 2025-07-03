@@ -2,18 +2,23 @@
 - name: Install software using package managers
   hosts: devserver
   tasks:
-    - name: Neovim
-      community.general.snap:
-        name: nvim
-        classic: true
+    - name: Install bat (batcat)
+      ansible.builtin.apt:
+        name: bat
+        state: present
       become: true
     - name: Install Neofetch
       ansible.builtin.apt:
         name: neofetch
         state: present
       become: true
-    - name: Install bat (batcat)
-      ansible.builtin.apt:
-        name: bat
-        state: present
+    - name: Install Neovim
+      community.general.snap:
+        name: nvim
+        classic: true
+      become: true
+    - name: Install tmux
+      community.general.snap:
+        name: tmux
+        classic: true
       become: true
