@@ -11,6 +11,9 @@ Si estas usando un cliente liviano es porque ya existe el **servidor de desarrol
 ## Configura tu cliente liviano
 
 1. Crea tu clave SSH con: `ssh-keygen`
+1. Agrega la clave SSH pública de tu estación de trabajo a:
+    - [Bitbucket](https://bitbucket.org/account/settings/ssh-keys/) y
+    - [GitHub](https://github.com/settings/keys/)
 1. Agrega tu clave SSH al agente para hacer _forwarding_
     - En Linux ejecuta: `ssh-add ~/.ssh/id_ed25519`
     - En WSL agrega a `~/.bashrc`:
@@ -18,9 +21,6 @@ Si estas usando un cliente liviano es porque ya existe el **servidor de desarrol
     eval `ssh-agent -s`
     ssh-add ~/.ssh/id_ed25519
     ```
-1. Agrega la clave SSH pública de tu estación de trabajo a:
-    - [Bitbucket](https://bitbucket.org/account/settings/ssh-keys/) y
-    - [GitHub](https://github.com/settings/keys/)
 1. Crea directorio para clonar repositorios:
     ```shell
     mkdir --parents ~/repositorios/
@@ -31,7 +31,7 @@ Si estas usando un cliente liviano es porque ya existe el **servidor de desarrol
     git clone git@github.com:devarops/thin_client.git
     cd thin_client
     make check
-    ```   
+    ```
 1. Instala [dotfiles](https://github.com/devarops/dotfiles):
     ```shell
     cd ~/repositorios/
@@ -44,9 +44,9 @@ Si estas usando un cliente liviano es porque ya existe el **servidor de desarrol
     ```shell
     ssh-keygen -f "$HOME/.ssh/known_hosts" -R "islasgeci.dev"
     ssh-keyscan "islasgeci.dev" >> "$HOME/.ssh/known_hosts"
-    export DEVELOPER=<Tu nombre de usuario del servidor>
-    scp -pr ~/.vault $DEVELOPER@islasgeci.dev:/home/$DEVELOPER/.vault
-    scp ~/todo.md $DEVELOPER@islasgeci.dev:/home/$DEVELOPER/todo.md
+    export USERNAME=<Tu nombre de usuario del servidor>
+    scp -pr ~/.vault $USERNAME@islasgeci.dev:/home/$USERNAME/.vault
+    scp ~/todo.md $USERNAME@islasgeci.dev:/home/$USERNAME/todo.md
     ```
 1. Crea el archivo `/etc/ansible/hosts` con el siguiente contenido:
     ```shell
@@ -58,7 +58,7 @@ Si estas usando un cliente liviano es porque ya existe el **servidor de desarrol
     cd ~/repositorios/thin_client
     make setup_server
     ```
-1. Finalmente, entra al servidor de desarrollo con: `ssh -o ForwardAgent=yes $DEVELOPER@islasgeci.dev`[^forward].
+1. Finalmente, entra al servidor de desarrollo con: `ssh -o ForwardAgent=yes $USERNAME@islasgeci.dev`[^forward].
 
 [^forward]:
     Alternativamente, puedes agregar la opción `ForwardAgent yes` a `~/.ssh/config` en tu cliente liviano:
