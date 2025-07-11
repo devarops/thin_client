@@ -32,3 +32,8 @@
         name: tmux
         classic: true
       become: true
+    - name: Install pyright globally with npm
+      ansible.builtin.npm:
+        name: pyright
+        global: true
+      become: true

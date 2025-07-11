@@ -14,6 +14,7 @@ check_package_versions:
 	node --version     | grep "^v18\."
 	npm --version      | grep "^9\."
 	nvim --version     | grep "^NVIM v0.11\."
+	pyright --version  | grep "^pyright 1\."
 	tmux -V            | grep "^tmux 3\."
 
 check_os_version:
