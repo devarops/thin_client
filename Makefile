@@ -11,6 +11,8 @@ SHELL := /bin/bash
 check_package_versions:
 	batcat --version   | grep "^bat 0\."
 	neofetch --version | grep "^Neofetch 7\."
+	node --version     | grep "^v18\."
+	npm --version      | grep "^9\."
 	nvim --version     | grep "^NVIM v0.11\."
 	tmux -V            | grep "^tmux 3\."
 

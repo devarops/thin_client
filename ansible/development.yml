@@ -17,6 +17,16 @@
         name: nvim
         classic: true
       become: true
+    - name: Install Node.js
+      ansible.builtin.apt:
+        name: nodejs
+        state: present
+      become: true
+    - name: Install npm
+      ansible.builtin.apt:
+        name: npm
+        state: present
+      become: true
     - name: Install tmux
       community.general.snap:
         name: tmux
