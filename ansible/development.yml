@@ -27,6 +27,11 @@
         name: npm
         state: present
       become: true
+    - name: Install ripgrep
+      ansible.builtin.apt:
+        name: ripgrep
+        state: present
+      become: true
     - name: Install tmux
       community.general.snap:
         name: tmux
