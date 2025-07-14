@@ -49,9 +49,10 @@ Si estas usando un cliente liviano es porque ya existe el **servidor de desarrol
     scp ~/todo.md $USERNAME@islasgeci.dev:/home/$USERNAME/todo.md
     ```
 1. Crea el archivo `/etc/ansible/hosts` con el siguiente contenido:
-    ```shell
-    [servers]
-    devserver ansible_host=islasgeci.dev ansible_user=evaro ansible_become_password="{{ lookup('env', 'DEVSERVER_SUDO_PASSWORD') }}"
+    ```ini
+    [devserver]
+    islasgeci.dev ansible_host=islasgeci.dev ansible_user=evaro ansible_become_password="{{ lookup('env', 'DEVSERVER_SUDO_PASSWORD') }}"
+    localhost ansible_connection=local
     ```
 1. Desde tu cliente liviano, configura el servidor de desarrollo
     ```shell
