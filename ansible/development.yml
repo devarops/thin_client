@@ -18,9 +18,10 @@
         classic: true
       become: true
     - name: Install Node.js
-      ansible.builtin.apt:
-        name: nodejs
-        state: present
+      community.general.snap:
+        name: node
+        channel: 22/stable
+        classic: true
       become: true
     - name: Install npm
       ansible.builtin.apt:
