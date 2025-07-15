@@ -20,7 +20,6 @@
     - name: Install Node.js
       community.general.snap:
         name: node
-        channel: 22/stable
         classic: true
       become: true
     - name: Install npm
