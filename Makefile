@@ -11,8 +11,8 @@ SHELL := /bin/bash
 check_package_versions:
 	batcat --version   | grep "^bat 0\."
 	neofetch --version | grep "^Neofetch 7\."
-	node --version     | grep "^v18\."
-	npm --version      | grep "^9\."
+	node --version     | grep "^v22\."
+	npm --version      | grep "^10\."
 	nvim --version     | grep "^NVIM v0.11\."
 	pyright --version  | grep "^pyright 1\."
 	rg --version       | grep "^ripgrep 14\."
