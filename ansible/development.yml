@@ -22,11 +22,6 @@
         name: node
         classic: true
       become: true
-    - name: Install npm
-      ansible.builtin.apt:
-        name: npm
-        state: present
-      become: true
     - name: Install ripgrep
       ansible.builtin.apt:
         name: ripgrep
