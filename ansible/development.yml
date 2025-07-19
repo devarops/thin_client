@@ -42,3 +42,33 @@
         name: tmux
         classic: true
       become: true
+
+- name: Install Lua Language Server
+  hosts: devserver
+  tasks:
+    - name: Install ninja-build (required for lua-language-server)
+      ansible.builtin.apt:
+        name: ninja-build
+        state: present
+      become: true
+    - name: Clone lua-language-server repo
+      ansible.builtin.git:
+        repo: https://github.com/LuaLS/lua-language-server.git
+        dest: /opt/lua-language-server
+        version: master
+        recursive: true
+        force: true
+      become: true
+    - name: Build lua-language-server
+      ansible.builtin.shell: ./make.sh
+      args:
+        chdir: /opt/lua-language-server
+        creates: /opt/lua-language-server/bin/lua-language-server
+      become: true
+    - name: Ensure lua-language-server is in PATH
+      ansible.builtin.file:
+        src: /opt/lua-language-server/bin/lua-language-server
+        dest: /usr/local/bin/lua-language-server
+        state: link
+        force: true
+      become: true

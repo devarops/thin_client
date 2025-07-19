@@ -9,15 +9,16 @@ SHELL := /bin/bash
 	check_package_versions
 
 check_package_versions:
-	batcat --version   | grep "^bat 0\."
-	neofetch --version | grep "^Neofetch 7\."
-	node --version     | grep "^v22\."
-	npm --version      | grep "^10\."
-	nvim --version     | grep "^NVIM v0.11\."
-	pyright --version  | grep "^pyright 1\."
-	R --version        | grep "^R version 4\."
-	rg --version       | grep "^ripgrep 14\."
-	tmux -V            | grep "^tmux 3\."
+	batcat --version              | grep "^bat 0\."
+	neofetch --version            | grep "^Neofetch 7\."
+	node --version                | grep "^v22\."
+	npm --version                 | grep "^10\."
+	nvim --version                | grep "^NVIM v0.11\."
+	pyright --version             | grep "^pyright 1\."
+	R --version                   | grep "^R version 4\."
+	rg --version                  | grep "^ripgrep 14\."
+	tmux -V                       | grep "^tmux 3\."
+	lua-language-server --version | grep "^3\."
 
 check_os_version:
 	cat /etc/os-release | grep "24.04"
