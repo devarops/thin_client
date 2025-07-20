@@ -72,3 +72,10 @@
         state: link
         force: true
       become: true
+    - name: Ensure ownership of lua-language-server is set to current user
+      ansible.builtin.file:
+        path: /opt/lua-language-server
+        owner: "{{ ansible_user_id }}"
+        group: "{{ ansible_user_id }}"
+        recurse: true
+      become: true
