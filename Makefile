@@ -10,6 +10,8 @@ SHELL := /bin/bash
 
 check_package_versions:
 	batcat --version              | grep "^bat 0\."
+	dpkg --list                   | grep libxml2-dev # required for R laguage server
+	lua-language-server --version | grep "^3\."
 	neofetch --version            | grep "^Neofetch 7\."
 	node --version                | grep "^v22\."
 	npm --version                 | grep "^10\."
@@ -17,8 +19,8 @@ check_package_versions:
 	pyright --version             | grep "^pyright 1\."
 	R --version                   | grep "^R version 4\."
 	rg --version                  | grep "^ripgrep 14\."
+	Rscript -e "packageVersion('languageserver')" | grep "0\."
 	tmux -V                       | grep "^tmux 3\."
-	lua-language-server --version | grep "^3\."
 
 check_os_version:
 	cat /etc/os-release | grep "24.04"
