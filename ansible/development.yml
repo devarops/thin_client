@@ -95,3 +95,4 @@
     - name: Install R 'languageserver' package
       ansible.builtin.command: >
         Rscript -e "install.packages('languageserver', repos = 'https://cloud.r-project.org')"
+      become: true
