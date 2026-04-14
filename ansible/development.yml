@@ -7,6 +7,11 @@
         name: bat
         state: present
       become: true
+    - name: Install lsof (list open files)
+      ansible.builtin.apt:
+        name: lsof
+        state: present
+      become: true
     - name: Install Neofetch
       ansible.builtin.apt:
         name: neofetch
@@ -96,3 +101,19 @@
       ansible.builtin.command: >
         Rscript -e "install.packages('languageserver', repos = 'https://cloud.r-project.org')"
       become: true
+
+- name: Install OpenCode
+  hosts: devserver
+  tasks:
+    - name: Install opencode
+      ansible.builtin.shell: |
+        curl -fsSL https://opencode.ai/install | bash
+      args:
+        creates: "{{ ansible_env.HOME }}/.opencode/bin/opencode"
+      environment:
+        HOME: "{{ ansible_env.HOME }}"
+    - name: Ensure opencode is in PATH (bashrc)
+      ansible.builtin.lineinfile:
+        path: "{{ ansible_env.HOME }}/.bashrc"
+        line: 'export PATH=$PATH:$HOME/.opencode/bin'
+        create: true
