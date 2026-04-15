@@ -49,24 +49,27 @@
 
 - name: Install Lua Language Server
   hosts: devserver
+  vars:
+    lua_ls_version: "3.18.2"
+    lua_ls_url: "https://github.com/LuaLS/lua-language-server/releases/download/{{ lua_ls_version }}/lua-language-server-{{ lua_ls_version }}-linux-x64.tar.gz"
   tasks:
-    - name: Install ninja-build (required for lua-language-server)
-      ansible.builtin.apt:
-        name: ninja-build
-        state: present
+    - name: Download lua-language-server binary
+      ansible.builtin.get_url:
+        url: "{{ lua_ls_url }}"
+        dest: /tmp/lua-language-server-{{ lua_ls_version }}-linux-x64.tar.gz
+        mode: '0644'
       become: true
-    - name: Clone lua-language-server repo
-      ansible.builtin.git:
-        repo: https://github.com/LuaLS/lua-language-server.git
+    - name: Create lua-language-server directory
+      ansible.builtin.file:
+        path: /opt/lua-language-server
+        state: directory
+        mode: '0755'
+      become: true
+    - name: Extract lua-language-server to /opt
+      ansible.builtin.unarchive:
+        src: /tmp/lua-language-server-{{ lua_ls_version }}-linux-x64.tar.gz
         dest: /opt/lua-language-server
-        version: master
-        recursive: true
-        force: true
-      become: true
-    - name: Build lua-language-server
-      ansible.builtin.shell: ./make.sh
-      args:
-        chdir: /opt/lua-language-server
+        remote_src: true
         creates: /opt/lua-language-server/bin/lua-language-server
       become: true
     - name: Ensure lua-language-server is in PATH
@@ -75,13 +78,6 @@
         dest: /usr/local/bin/lua-language-server
         state: link
         force: true
-      become: true
-    - name: Ensure ownership of lua-language-server is set to current user
-      ansible.builtin.file:
-        path: /opt/lua-language-server
-        owner: "{{ ansible_user_id }}"
-        group: "{{ ansible_user_id }}"
-        recurse: true
       become: true
 
 - name: Install R Language Server
