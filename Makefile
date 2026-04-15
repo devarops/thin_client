@@ -15,7 +15,7 @@ check_package_versions:
 	neofetch --version            | grep "^Neofetch 7\."
 	node --version                | grep "^v22\."
 	npm --version                 | grep "^10\."
-	nvim --version                | grep "^NVIM v0.11\."
+	nvim --version                | grep "^NVIM v0.12\."
 	opencode --version            | grep "^1\."
 	pyright --version             | grep "^pyright 1\."
 	R --version                   | grep "^R version 4\."
