@@ -38,12 +38,17 @@
         classic: true
       become: true
 
-- name: Install Python Language Server
+- name: Install software using npm
   hosts: devserver
   tasks:
-    - name: Install pyright (Python type checking)
+    - name: Install Python Language Server
       ansible.builtin.npm:
         name: pyright
+        global: true
+      become: true
+    - name: Install tree-sitter-cli (required by nvim-treesitter main branch)
+      ansible.builtin.npm:
+        name: tree-sitter-cli
         global: true
       become: true
 

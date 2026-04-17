@@ -22,6 +22,7 @@ check_package_versions:
 	rg --version                  | grep "^ripgrep 14\."
 	Rscript -e "packageVersion('languageserver')" | grep "0\."
 	tmux -V                       | grep "^tmux 3\."
+	tree-sitter --version         | grep "^tree-sitter 0\."
 
 check_os_version:
 	cat /etc/os-release | grep "24.04"
