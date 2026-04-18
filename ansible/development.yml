@@ -7,6 +7,11 @@
         name: bat
         state: present
       become: true
+    - name: Install fdfind
+      ansible.builtin.apt:
+        name: fd-find
+        state: present
+      become: true
     - name: Install lsof (list open files)
       ansible.builtin.apt:
         name: lsof
