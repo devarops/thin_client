@@ -13,6 +13,7 @@ check_package_versions:
 	batcat --version              | grep "^bat 0\."
 	dpkg --list                   | grep libxml2-dev # required for R laguage server
 	fdfind --version              | grep "^fdfind 9\."
+	gemini --version              | grep "^0\."
 	lua-language-server --version | grep "^3\."
 	neofetch --version            | grep "^Neofetch 7\."
 	node --version                | grep "^v22\."
