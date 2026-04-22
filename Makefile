@@ -14,6 +14,7 @@ check_package_versions:
 	dpkg --list                   | grep libxml2-dev # required for R laguage server
 	fdfind --version              | grep "^fdfind 9\."
 	gemini --version              | grep "^0\."
+	gh --version                  | grep "^gh version 2\."
 	lua-language-server --version | grep "^3\."
 	neofetch --version            | grep "^Neofetch 7\."
 	node --version                | grep "^v22\."
