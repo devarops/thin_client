@@ -10,27 +10,52 @@ Si estas usando un cliente liviano es porque ya existe el **servidor de desarrol
 
 ## Configura tu cliente liviano
 
-1. Crea tu clave SSH con: `ssh-keygen`
-1. Agrega la clave SSH pública de tu estación de trabajo a:
+1. Crea tu llave SSH con: `ssh-keygen`
+1. Agrega la llave SSH pública de tu estación de trabajo a:
     - [Bitbucket](https://bitbucket.org/account/settings/ssh-keys/) y
     - [GitHub](https://github.com/settings/keys/)
-1. Agrega tu clave SSH al agente para hacer _forwarding_
+1. Agrega tu llave SSH al agente para hacer _forwarding_
     - En Linux ejecuta: `ssh-add ~/.ssh/id_ed25519`
     - En WSL agrega a `~/.bashrc`:
     ```shell
     eval `ssh-agent -s`
     ssh-add ~/.ssh/id_ed25519
     ```
+1. Agrega tu llave SSH a [GitHub](https://github.com/settings/ssh/new).
 1. Crea directorio para clonar repositorios:
     ```shell
     mkdir --parents ~/repositorios/
     ```
-1. Verifica que tu cliente liviano cuenta con el softare requerido
+1. Instala Ansible, Git y Make:
+    ```shell
+    sudo apt update && sudo apt install --yes ansible-core git make
+    ```
+1. Verifica que tu cliente liviano cuenta con el software requerido:
     ```shell
     cd ~/repositorios/
     git clone git@github.com:devarops/thin_client.git
     cd thin_client
     make check
+    ```
+1. Si el paso anterior falló, instala el software faltante.
+    1. Crea el archivo `/etc/ansible/hosts` con el siguiente contenido:
+    ```shell
+    [devserver]
+    islasgeci.dev ansible_host=islasgeci.dev ansible_user=evaro ansible_become_password="{{ lookup('env', 'DEVSERVER_SUDO_PASSWORD') }}"
+
+    [thin_client]
+    islasgeci.dev ansible_host=islasgeci.dev ansible_user=evaro ansible_become_password="{{ lookup('env', 'DEVSERVER_SUDO_PASSWORD') }}"
+    localhost ansible_connection=local
+    ```
+    1. Agrega tu llave SSH pública a `~/.ssh/authorized_keys` para poder configurar tu cliente liviano con Ansible:
+    ```shell
+    ssh-copy-id localhost
+    ssh localhost
+    exit
+    ```
+    1. Ejecuta el siguiente comando para instalar el software faltante:
+    ```shell
+    make setup
     ```
 1. Instala [dotfiles](https://github.com/devarops/dotfiles):
     ```shell

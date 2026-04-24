@@ -38,4 +38,4 @@ check: \
 		check_os_version
 
 setup:
-	ansible-playbook ansible/development.yml
+	ansible-playbook ansible/development.yml --ask-become-pass
