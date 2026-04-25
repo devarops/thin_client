@@ -1,6 +1,6 @@
 ---
 - name: Install software using package managers
-  hosts: thin_client
+  hosts: development
   tasks:
     - name: Install batcat
       ansible.builtin.apt:
@@ -55,7 +55,7 @@
       become: true
 
 - name: Install software using npm
-  hosts: thin_client
+  hosts: development
   tasks:
     - name: Install Gemini CLI
       ansible.builtin.npm:
@@ -74,7 +74,7 @@
       become: true
 
 - name: Install Lua Language Server
-  hosts: thin_client
+  hosts: development
   vars:
     lua_ls_version: "3.18.2"
     lua_ls_url: "https://github.com/LuaLS/lua-language-server/releases/download/{{ lua_ls_version }}/lua-language-server-{{ lua_ls_version }}-linux-x64.tar.gz"
@@ -107,7 +107,7 @@
       become: true
 
 - name: Install R Language Server
-  hosts: thin_client
+  hosts: development
   tasks:
     - name: Install R base
       ansible.builtin.apt:
@@ -125,7 +125,7 @@
       become: true
 
 - name: Install OpenCode
-  hosts: thin_client
+  hosts: development
   tasks:
     - name: Install opencode
       ansible.builtin.shell: |

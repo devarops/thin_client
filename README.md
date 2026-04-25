@@ -37,10 +37,7 @@ Si estas usando un cliente liviano es porque ya existe el **servidor de desarrol
     ```
 1. Crea el archivo `/etc/ansible/hosts` con el siguiente contenido:
     ```shell
-    [devserver]
-    islasgeci.dev ansible_host=islasgeci.dev ansible_user=evaro ansible_become_password="{{ lookup('env', 'DEVSERVER_SUDO_PASSWORD') }}"
-
-    [thin_client]
+    [development]
     islasgeci.dev ansible_host=islasgeci.dev ansible_user=evaro ansible_become_password="{{ lookup('env', 'DEVSERVER_SUDO_PASSWORD') }}"
     localhost ansible_connection=local
     ```
@@ -50,7 +47,7 @@ Si estas usando un cliente liviano es porque ya existe el **servidor de desarrol
     cd ~/repositorios/
     git clone git@github.com:devarops/thin_client.git
     cd thin_client
-    make setup
+    make setup_client
     ```
 1. Verifica que tu cliente liviano cuenta con el software requerido:
     ```shell
@@ -75,7 +72,7 @@ Si estas usando un cliente liviano es porque ya existe el **servidor de desarrol
 1. Configura el servidor de desarrollo desde tu cliente liviano
     ```shell
     cd ~/repositorios/thin_client/
-    make setup
+    make setup_server
     ```
 1. Finalmente, entra al servidor de desarrollo con: `ssh -o ForwardAgent=yes $USERNAME@islasgeci.dev`[^forward].
 

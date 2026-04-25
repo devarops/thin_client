@@ -7,7 +7,8 @@ SHELL := /bin/bash
 	check \
 	check_os_version \
 	check_package_versions \
-	setup
+	setup_client \
+	setup_server
 
 check_package_versions:
 	batcat --version              | grep "^bat 0\."
@@ -38,5 +39,8 @@ check: \
 		check_package_versions \
 		check_os_version
 
-setup:
-	ansible-playbook ansible/development.yml
+setup_client:
+	ansible-playbook ansible/development.yml --limit localhost
+
+setup_server:
+	ansible-playbook ansible/development.yml --limit islasgeci.dev
