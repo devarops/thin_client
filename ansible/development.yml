@@ -122,6 +122,8 @@
     - name: Install R 'languageserver' package
       ansible.builtin.command: >
         Rscript -e "install.packages('languageserver', repos = 'https://cloud.r-project.org')"
+      args:
+        creates: /usr/local/lib/R/site-library/languageserver
       become: true
 
 - name: Install OpenCode
