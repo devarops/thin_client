@@ -22,23 +22,20 @@ Si estas usando un cliente liviano es porque ya existe el **servidor de desarrol
     ssh-add ~/.ssh/id_ed25519
     ```
 1. Agrega tu llave SSH a [GitHub](https://github.com/settings/ssh/new).
-1. Crea directorio para clonar repositorios:
+1. Configura el usuario `evaro` para que `sudo` no requiera contraseña:
     ```shell
-    mkdir --parents ~/repositorios/
+    sudo update-alternatives --config editor
+    sudo visudo -f /etc/sudoers.d/evaro
+    ```
+    agregando esta línea:
+    ```
+    evaro ALL=(ALL) NOPASSWD: ALL
     ```
 1. Instala Ansible, Git y Make:
     ```shell
     sudo apt update && sudo apt install --yes ansible-core git make
     ```
-1. Verifica que tu cliente liviano cuenta con el software requerido:
-    ```shell
-    cd ~/repositorios/
-    git clone git@github.com:devarops/thin_client.git
-    cd thin_client
-    make check
-    ```
-1. Si el paso anterior falló, instala el software faltante.
-    1. Crea el archivo `/etc/ansible/hosts` con el siguiente contenido:
+1. Crea el archivo `/etc/ansible/hosts` con el siguiente contenido:
     ```shell
     [devserver]
     islasgeci.dev ansible_host=islasgeci.dev ansible_user=evaro ansible_become_password="{{ lookup('env', 'DEVSERVER_SUDO_PASSWORD') }}"
@@ -47,15 +44,17 @@ Si estas usando un cliente liviano es porque ya existe el **servidor de desarrol
     islasgeci.dev ansible_host=islasgeci.dev ansible_user=evaro ansible_become_password="{{ lookup('env', 'DEVSERVER_SUDO_PASSWORD') }}"
     localhost ansible_connection=local
     ```
-    1. Agrega tu llave SSH pública a `~/.ssh/authorized_keys` para poder configurar tu cliente liviano con Ansible:
+1. Configura tu cliente liviano
     ```shell
-    ssh-copy-id localhost
-    ssh localhost
-    exit
-    ```
-    1. Ejecuta el siguiente comando para instalar el software faltante:
-    ```shell
+    mkdir --parents ~/repositorios/
+    cd ~/repositorios/
+    git clone git@github.com:devarops/thin_client.git
+    cd thin_client
     make setup
+    ```
+1. Verifica que tu cliente liviano cuenta con el software requerido:
+    ```shell
+    make check
     ```
 1. Instala [dotfiles](https://github.com/devarops/dotfiles):
     ```shell
@@ -73,16 +72,10 @@ Si estas usando un cliente liviano es porque ya existe el **servidor de desarrol
     scp -pr ~/.vault $USERNAME@islasgeci.dev:/home/$USERNAME/.vault
     scp ~/todo.md $USERNAME@islasgeci.dev:/home/$USERNAME/todo.md
     ```
-1. Crea el archivo `/etc/ansible/hosts` con el siguiente contenido:
-    ```ini
-    [devserver]
-    islasgeci.dev ansible_host=islasgeci.dev ansible_user=evaro ansible_become_password="{{ lookup('env', 'DEVSERVER_SUDO_PASSWORD') }}"
-    localhost ansible_connection=local
-    ```
-1. Desde tu cliente liviano, configura el servidor de desarrollo
+1. Configura el servidor de desarrollo desde tu cliente liviano
     ```shell
-    cd ~/repositorios/thin_client
-    make setup_server
+    cd ~/repositorios/thin_client/
+    make setup
     ```
 1. Finalmente, entra al servidor de desarrollo con: `ssh -o ForwardAgent=yes $USERNAME@islasgeci.dev`[^forward].
 
