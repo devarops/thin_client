@@ -11,12 +11,12 @@ SHELL := /bin/bash
 	setup_server
 
 check_package_versions:
+	agy --version                 | grep "^1\."
 	batcat --version              | grep "^bat 0\."
 	dpkg --list                   | grep libuv1-dev  # required for R laguage server
 	dpkg --list                   | grep libxml2-dev # required for R laguage server
 	fastfetch --version           | grep "^fastfetch 2\."
 	fdfind --version              | grep "^fdfind 10\."
-	agy --version                 | grep "^0\."
 	gh --version                  | grep "^gh version 2\."
 	lua-language-server --version | grep "^3\."
 	node --version                | grep "^v24\."
