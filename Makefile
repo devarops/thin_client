@@ -11,7 +11,7 @@ SHELL := /bin/bash
 	setup_server
 
 check_package_versions:
-	agy --version                 | grep "^1\."
+	aider --version               | grep "^aider 0\."
 	batcat --version              | grep "^bat 0\."
 	dpkg --list                   | grep libuv1-dev  # required for R laguage server
 	dpkg --list                   | grep libxml2-dev # required for R laguage server

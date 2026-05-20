@@ -57,13 +57,6 @@
 - name: Install software using npm
   hosts: development
   tasks:
-    - name: Install Antigravity CLI
-      ansible.builtin.shell: |
-        curl -fsSL https://antigravity.google/cli/install.sh | bash
-      args:
-        creates: "{{ ansible_env.HOME }}/.local/bin/agy"
-      environment:
-        HOME: "{{ ansible_env.HOME }}"
     - name: Install Python Language Server
       ansible.builtin.npm:
         name: pyright
@@ -128,7 +121,7 @@
         creates: /usr/local/lib/R/site-library/languageserver
       become: true
 
-- name: Install OpenCode
+- name: Install AI Agents
   hosts: development
   tasks:
     - name: Install opencode
@@ -143,3 +136,10 @@
         path: "{{ ansible_env.HOME }}/.bashrc"
         line: 'export PATH=$PATH:$HOME/.opencode/bin'
         create: true
+    - name: Install aider
+      ansible.builtin.shell: |
+        curl -LsSf https://aider.chat/install.sh | sh
+      args:
+        creates: "{{ ansible_env.HOME }}/.local/bin/aider"
+      environment:
+        HOME: "{{ ansible_env.HOME }}"
