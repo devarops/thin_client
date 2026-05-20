@@ -57,11 +57,13 @@
 - name: Install software using npm
   hosts: development
   tasks:
-    - name: Install Gemini CLI
-      ansible.builtin.npm:
-        name: "@google/gemini-cli"
-        global: true
-      become: true
+    - name: Install Antigravity CLI
+      ansible.builtin.shell: |
+        curl -fsSL https://antigravity.google/cli/install.sh | bash
+      args:
+        creates: "{{ ansible_env.HOME }}/.local/bin/agy"
+      environment:
+        HOME: "{{ ansible_env.HOME }}"
     - name: Install Python Language Server
       ansible.builtin.npm:
         name: pyright
