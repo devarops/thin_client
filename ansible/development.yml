@@ -136,10 +136,10 @@
         path: "{{ ansible_env.HOME }}/.bashrc"
         line: 'export PATH=$PATH:$HOME/.opencode/bin'
         create: true
-    - name: Install aider
+    - name: Install pi
       ansible.builtin.shell: |
-        curl -LsSf https://aider.chat/install.sh | sh
+        npm install -g --ignore-scripts --prefix ~/.local @earendil-works/pi-coding-agent
       args:
-        creates: "{{ ansible_env.HOME }}/.local/bin/aider"
+        creates: "{{ ansible_env.HOME }}/.local/bin/pi"
       environment:
         HOME: "{{ ansible_env.HOME }}"
