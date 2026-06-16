@@ -19,7 +19,7 @@ check_package_versions:
 	fdfind --version              | grep "^fdfind 10\."
 	gh --version                  | grep "^gh version 2\."
 	lua-language-server --version | grep "^3\."
-	node --version                | grep "^v22\."
+	node --version                | grep "^v24\."
 	npm --version                 | grep "^9\."
 	nvim --version                | grep "^NVIM v0.12\."
 	opencode --version            | grep "^1\."
