@@ -21,7 +21,6 @@ Si estas usando un cliente liviano es porque ya existe el **servidor de desarrol
     eval `ssh-agent -s`
     ssh-add ~/.ssh/id_ed25519
     ```
-1. Agrega tu llave SSH a [GitHub](https://github.com/settings/ssh/new).
 1. Configura el usuario `evaro` para que `sudo` no requiera contraseña:
     ```shell
     sudo update-alternatives --config editor
