@@ -48,6 +48,7 @@ Si estas usando un cliente liviano es porque ya existe el **servidor de desarrol
     cd thin_client
     make setup_client
     ```
+1. Reinincia la terminal.
 1. Verifica que tu cliente liviano cuenta con el software requerido:
     ```shell
     make check
