@@ -20,7 +20,7 @@ check_package_versions:
 	gh --version                  | grep "^gh version 2\."
 	lua-language-server --version | grep "^3\."
 	node --version                | grep "^v24\."
-	npm --version                 | grep "^9\."
+	npm --version                 | grep "^11\."
 	nvim --version                | grep "^NVIM v0.12\."
 	opencode --version            | grep "^1\."
 	pyright --version             | grep "^pyright 1\."
