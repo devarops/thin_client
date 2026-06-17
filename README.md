@@ -51,6 +51,7 @@ Si estas usando un cliente liviano es porque ya existe el **servidor de desarrol
 1. Reinincia la terminal.
 1. Verifica que tu cliente liviano cuenta con el software requerido:
     ```shell
+    cd ~/repositorios/thin_client
     make check
     ```
 1. Instala [dotfiles](https://github.com/devarops/dotfiles):
