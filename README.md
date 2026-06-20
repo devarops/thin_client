@@ -62,38 +62,5 @@ Si estas usando un cliente liviano es porque ya existe el **servidor de desarrol
     make install
     ```
 1. Agrega tu [bóveda secreta](https://docs.google.com/document/d/1lY7ycXs4J8wp1OyJCmPsvfB7YdQqscqL52cIZxBP6Rw/).
-1. Copia las credenciales hacia el servidor de desarrollo
-    ```shell
-    ssh-keygen -f "$HOME/.ssh/known_hosts" -R "islasgeci.dev"
-    ssh-keyscan "islasgeci.dev" >> "$HOME/.ssh/known_hosts"
-    export USERNAME=<Tu nombre de usuario del servidor>
-    scp -pr ~/.vault $USERNAME@islasgeci.dev:/home/$USERNAME/.vault
-    scp ~/todo.md $USERNAME@islasgeci.dev:/home/$USERNAME/todo.md
-    ```
-1. Configura el servidor de desarrollo desde tu cliente liviano
-    ```shell
-    cd ~/repositorios/thin_client/
-    make setup_server
-    ```
-1. Finalmente, entra al servidor de desarrollo con: `ssh -o ForwardAgent=yes $USERNAME@islasgeci.dev`[^forward].
-
-[^forward]:
-    Alternativamente, puedes agregar la opción `ForwardAgent yes` a `~/.ssh/config` en tu cliente liviano:
-    ```
-    Host islasgeci.dev
-      ForwardAgent yes
-    ```
-    Revisa [este ejemplo](https://github.com/devarops/dotfiles/blob/develop/.ssh/config).
-
----
-
-## Opcional: En tu cliente liviano monta los repositorios del servidor
-
-```shell
-sudo apt install sshfs
-sudo mkdir --parents /mnt/$USERNAME/
-sudo chown $USER:$USER /mnt/$USERNAME/
-sshfs $USERNAME@islasgeci.dev:/home/$USERNAME/repositorios/ /mnt/$USERNAME/
-```
-
-> Para desmontar: `fusermount -u /mnt/$USERNAME/`
+1. Copia las credenciales hacia el servidor de desarrollo y configura el servidor de desarrollo desde tu cliente liviano: `init-devserver`[.](https://github.com/devarops/dotfiles/blob/develop/.bash_aliases#L9)
+1. Finalmente, entra al servidor de desarrollo con: `ssh devserver`[.](https://github.com/devarops/dotfiles/blob/develop/.ssh/config)
