@@ -38,10 +38,13 @@
         name: nvim
         classic: true
       become: true
-    - name: Install Node.js
-      community.general.snap:
-        name: node
-        classic: true
+    - name: Install Node.js and npm
+      ansible.builtin.apt:
+        name:
+          - nodejs
+          - npm
+        state: present
+        update_cache: true
       become: true
     - name: Install ripgrep
       ansible.builtin.apt:
