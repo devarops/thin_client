@@ -11,11 +11,10 @@ Makefile, and the documents that declare what a client must have.
 
 ## The public interface
 
-The public interface is the Makefile. Its six targets are the outermost
-surface the user consumes: `all`, `check`, `check_desktop`,
-`check_os_version`, `check_package_versions`, and `setup_client`. `DOCS.md`
-lists them and nothing else. `CHANGELOG.md` records only changes to them.
-The playbook, the inventory, and the documents themselves are not interface.
+The public interface is the Makefile. It is the outermost surface the user
+consumes, and `DOCS.md` lists its elements and nothing else. `CHANGELOG.md`
+records only changes to those elements. The playbook, the inventory, and the
+documents themselves are not interface.
 
 ## Verification
 
