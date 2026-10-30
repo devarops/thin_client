@@ -4,15 +4,10 @@ Provisions an Ubuntu 26.04 laptop to work against the shared development
 server at `islasgeci.dev`. The repository holds one Ansible playbook, one
 Makefile, and the documents that declare what a client must have.
 
-## Who this is for
+## Writing the documentation
 
-The user sets up a laptop for the first time. They copy and paste commands
-and cannot write a playbook, a Makefile target, or a script. Every documented
-command must be complete and safe to paste verbatim.
-
-The maintainer writes and owns the playbook, the Makefile, and the
-documentation, and diagnoses failures. Do not write instructions that assume
-the user can debug them.
+- Every documented command must be complete and safe to paste verbatim.
+- Do not write instructions that assume the reader can debug them.
 
 ## The public interface
 
