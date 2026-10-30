@@ -17,6 +17,12 @@ consumes, and `DOCS.md` lists its elements and nothing else. `CHANGELOG.md`
 records only changes to those elements. The playbook, the inventory, and the
 documents themselves are not interface.
 
+## Version 1.0.0 release conditions
+
+Release 1.0.0 the first time `ansible/development.yml` runs without warnings
+and a second consecutive run changes nothing. Neither run prints `WARNING` or
+`DEPRECATION WARNING`, and the second play recap reports `changed=0`.
+
 ## Verification
 
 There are no tests. Verification is `make check`, which needs a provisioned
