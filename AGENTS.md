@@ -8,6 +8,7 @@ Makefile, and the documents that declare what a client must have.
 
 - Every documented command must be complete and safe to paste verbatim.
 - Do not write instructions that assume the reader can debug them.
+- Every `TODO.md` item carries a `Test:` line that fails while the item is open, and names files, not line numbers.
 
 ## The public interface
 
