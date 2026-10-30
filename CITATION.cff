@@ -1,0 +1,23 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+title: "Thin client configuration for remote development"
+type: software
+authors:
+  - family-names: Rojas Mayoral
+    given-names: Evaristo
+    orcid: "https://orcid.org/0000-0001-6812-9562"
+contact:
+  - family-names: Rojas Mayoral
+    given-names: Evaristo
+    orcid: "https://orcid.org/0000-0001-6812-9562"
+repository-code: "https://github.com/devarops/thin_client"
+url: "https://github.com/devarops/thin_client"
+license: "AGPL-3.0-only"
+version: "0.1.0"
+date-released: 2026-10-30
+abstract: "An Ansible playbook and a Makefile that provision an Ubuntu 26.04 laptop to work against the team's shared development server and then verify the installed tools."
+keywords:
+  - ansible
+  - provisioning
+  - ubuntu
+  - development environment
