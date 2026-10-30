@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- `make check_package_versions` accepts any Neovim 0.x version instead of requiring 0.12, because the snap updates on its own.
+
 ## [0.1.0] - 2026-10-30
 
 ### Added

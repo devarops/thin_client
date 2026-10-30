@@ -21,7 +21,7 @@ check_package_versions:
 	lua-language-server --version | grep "^3\."
 	node --version                | grep "^v22\."
 	npm --version                 | grep "^9\."
-	nvim --version                | grep "^NVIM v0.12\."
+	nvim --version                | grep "^NVIM v0\."  # the snap refreshes itself, so only pin the major version
 	opencode --version            | grep "^opencode v2\."
 	pi --version                  | grep "^1\."
 	pyright --version             | grep "^pyright 1\."
