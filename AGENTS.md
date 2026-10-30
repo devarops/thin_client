@@ -50,10 +50,13 @@ with `ansible-playbook --syntax-check ansible/development.yml`.
   it.
 - `ansible-core`, `git`, `make`, and the inventory are manual prerequisites,
   not provisioned.
-- The inventory reads `DEVSERVER_SUDO_PASSWORD` from the environment, which
-  dotfiles loads from the vault. Without it, the server host line cannot
-  escalate privileges.
+- The inventory maps `ansible_become_password` to `DEVSERVER_SUDO_PASSWORD`,
+  which dotfiles loads from the vault. The server's drop-in makes the
+  password unnecessary, and `become` works with the variable unset.
 - The R `languageserver` install compiles from source and can exceed five
   minutes.
-- Ubuntu 26.04 ships `sudo-rs`, which requires a TTY for password
-  authentication and breaks Ansible `become`. See `TODO.md`.
+- The server gains passwordless sudo from
+  `/etc/sudoers.d/sudo-group-nopasswd`, which `development_server_setup`
+  writes (commit `e635cc7`). That file is why `become` works even though
+  Ubuntu 26.04 ships `sudo-rs` and requires a TTY for password
+  authentication.
