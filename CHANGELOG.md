@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - `make check_package_versions` accepts any Neovim 0.x version instead of requiring 0.12, because the snap updates on its own.
+- `make check_desktop` looks for the Debian package of Slack instead of the snap, because Slack publishes the same releases to its own apt repository.
 
 ### Removed
 

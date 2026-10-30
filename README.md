@@ -89,11 +89,11 @@ There is no containerised path: the setup runs directly on the laptop.
 1. Enter the development server with:
    `ssh devserver`[.](https://github.com/devarops/dotfiles/blob/develop/.ssh/config)
 
-### Desktop applications
+## Desktop applications
 
 Install these during step 3. `make check` fails if any of them is missing.
 
-#### Ghostty
+### Ghostty
 
 Terminal emulator built with GTK 4 and libadwaita. Install it from the snap:
 it is the only source of current releases for Ubuntu 26.04, whose archive
@@ -108,26 +108,35 @@ The snap refreshes itself, so the check pins the major version only.
 Make it the default terminal in GNOME Settings, or launch it from the
 application grid. Ptyxis is the distribution default and can stay installed.
 
-#### Slack
+### Slack
 
-Desktop client, from the snap published by Slack.
-
-```shell
-sudo snap install slack
-```
-
-A laptop provisioned before this policy may carry the `slack-desktop` Debian
-package instead. Remove it first, because `/usr/bin` precedes `/snap/bin` in
-the default path and the old binary would keep winning:
+Desktop client, from Slack's own apt repository.
 
 ```shell
-sudo apt remove --yes slack-desktop
+curl --fail --silent --show-error --location \
+  https://packagecloud.io/slacktechnologies/slack/gpgkey \
+  | sudo gpg --dearmour --output /usr/share/keyrings/slack-desktop.gpg
+echo "Types: deb
+URIs: https://packagecloud.io/slacktechnologies/slack/debian/
+Suites: jessie
+Components: main
+Signed-By: /usr/share/keyrings/slack-desktop.gpg" \
+  | sudo tee /etc/apt/sources.list.d/slack.sources
+sudo apt update && sudo apt install --yes slack-desktop
 ```
 
-Slack updates itself weekly, so the check asserts presence rather than a
-version we cannot meaningfully hold.
+The repository tracks the same releases as the snap, shipped by Slack
+itself. A laptop that already has the snap must remove it, so the package
+manager owns the only copy:
 
-#### Emoji picker
+```shell
+sudo snap remove slack
+```
+
+The check pins no version, because Slack ships weekly and the repository
+always carries the current one.
+
+### Emoji picker
 
 `ibus-typing-booster`, from the Ubuntu archive. It provides completion and
 emoji input for the IBus input method.
@@ -139,7 +148,7 @@ sudo apt update && sudo apt install --yes ibus-typing-booster
 Log out and back in, or run `ibus restart`, before the input method appears
 in the keyboard menu.
 
-#### Nerd Fonts
+### Nerd Fonts
 
 Hack Nerd Font, installed per user from the pinned nerd-fonts release.
 Terminal and editor glyphs depend on it; the theme and prompt assume it is

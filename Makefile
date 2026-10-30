@@ -39,7 +39,7 @@ check_desktop:
 	ghostty --version             | grep "^Ghostty 1\."  # the snap refreshes itself, so only pin the major version
 	dpkg --list                   | grep ibus-typing-booster
 	fc-list                       | grep "Hack Nerd Font"
-	snap list slack               | grep "^slack"
+	dpkg --list                   | grep slack-desktop
 
 check: \
 		check_package_versions \
