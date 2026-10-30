@@ -11,7 +11,6 @@ SHELL := /bin/bash
 	setup_server
 
 check_package_versions:
-	pi --version                  | grep "^0\."
 	batcat --version              | grep "^bat 0\."
 	dpkg --list                   | grep libuv1-dev  # required for R laguage server
 	dpkg --list                   | grep libxml2-dev # required for R laguage server
@@ -22,7 +21,8 @@ check_package_versions:
 	node --version                | grep "^v22\."
 	npm --version                 | grep "^9\."
 	nvim --version                | grep "^NVIM v0.12\."
-	opencode --version            | grep "^1\."
+	opencode --version            | grep "^opencode v2\."
+	pi --version                  | grep "^1\."
 	pyright --version             | grep "^pyright 1\."
 	R --version                   | grep "^R version 4\."
 	rg --version                  | grep "^ripgrep 15\."
