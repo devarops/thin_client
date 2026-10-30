@@ -49,7 +49,8 @@ Si estas usando un cliente liviano es porque ya existe el **servidor de desarrol
     make setup_client
     ```
 1. Reinincia la terminal.
-1. Verifica que tu cliente liviano cuenta con el software requerido:
+1. Instala las aplicaciones de escritorio declaradas en [DESKTOP.md](DESKTOP.md).
+1. Verifica que tu cliente liviano cuenta con el software requerido, incluidas las aplicaciones de escritorio:
     ```shell
     cd ~/repositorios/thin_client
     make check
