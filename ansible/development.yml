@@ -28,11 +28,6 @@
         state: present
         update_cache: true
       become: true
-    - name: Install lsof (list open files)
-      ansible.builtin.apt:
-        name: lsof
-        state: present
-      become: true
     - name: Install Neovim
       community.general.snap:
         name: nvim
