@@ -1,23 +1,16 @@
 # Interface
 
 The public interface is the Makefile. These seven targets are its outermost
-surface, and every one of them runs from the repository root.
+surface, and every one of them runs from the repository root. Each target
+exits with the status of its commands.
 
-### make
+### make all
 
 Default target, with no arguments.
 
 Parameters: none.
 
-Notes: equivalent to `make check`.
-
-### make all
-
-Explicit name of the default target.
-
-Parameters: none.
-
-Notes: equivalent to `make check`.
+Notes: equivalent to `make check`; running `make` alone is the same.
 
 ### make check
 

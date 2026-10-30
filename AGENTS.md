@@ -54,6 +54,9 @@ with `ansible-playbook --syntax-check ansible/development.yml`.
   it.
 - `ansible-core`, `git`, `make`, and the inventory are manual prerequisites,
   not provisioned.
+- The inventory reads `DEVSERVER_SUDO_PASSWORD` from the environment, which
+  dotfiles loads from the vault. Without it, the server host line cannot
+  escalate privileges.
 - The R `languageserver` install compiles from source and can exceed five
   minutes.
 - Ubuntu 26.04 ships `sudo-rs`, which requires a TTY for password
