@@ -1,6 +1,6 @@
 # Interface
 
-The public interface is the Makefile. These seven targets are its outermost
+The public interface is the Makefile. These six targets are its outermost
 surface, and every one of them runs from the repository root. Each target
 exits with the status of its commands.
 
@@ -50,15 +50,3 @@ Parameters: none.
 
 Errors: fails when sudo asks for a password, or when the inventory has no
 localhost entry.
-
-### make setup_server
-
-Installs the declared tools on `islasgeci.dev`.
-
-Parameters: none.
-
-Errors: fails when Ansible cannot escalate privileges, which happens on
-Ubuntu 26.04 without passwordless sudo.
-
-Notes: the documented setup does not call this target. The dotfiles alias
-`init-devserver` runs the playbook directly.

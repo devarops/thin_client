@@ -11,6 +11,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - `make check_package_versions` accepts any Neovim 0.x version instead of requiring 0.12, because the snap updates on its own.
 
+### Removed
+
+- `make setup_server`. The dotfiles alias `init-devserver` already ran the same playbook directly, so the target duplicated it without being reachable from the documented setup.
+
 ## [0.1.0] - 2026-10-30
 
 ### Added

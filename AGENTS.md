@@ -11,12 +11,11 @@ Makefile, and the documents that declare what a client must have.
 
 ## The public interface
 
-The public interface is the Makefile. Its seven targets are the outermost
+The public interface is the Makefile. Its six targets are the outermost
 surface the user consumes: `all`, `check`, `check_desktop`,
-`check_os_version`, `check_package_versions`, `setup_client`, and
-`setup_server`. `DOCS.md` lists them and nothing else. `CHANGELOG.md`
-records only changes to them. The playbook, the inventory, and the documents
-themselves are not interface.
+`check_os_version`, `check_package_versions`, and `setup_client`. `DOCS.md`
+lists them and nothing else. `CHANGELOG.md` records only changes to them.
+The playbook, the inventory, and the documents themselves are not interface.
 
 ## Verification
 
@@ -30,8 +29,8 @@ with `ansible-playbook --syntax-check ansible/development.yml`.
 - `make setup_client` provisions `localhost`.
 - `make check` runs every `check_*` target.
 - `ansible-playbook ansible/development.yml --limit islasgeci.dev`
-  provisions the server; the dotfiles alias `init-devserver` calls this
-  directly instead of `make setup_server`.
+  provisions the server; the dotfiles alias `init-devserver` is the
+  documented way to run it.
 
 ## Conventions
 

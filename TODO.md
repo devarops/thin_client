@@ -1,8 +1,8 @@
-# TODO — `make setup_server` Failure: Privilege Escalation Timeout
+# TODO — Server Provisioning Failure: Privilege Escalation Timeout
 
 ## Problem
 
-Running `make setup_server` (which executes `ansible-playbook ansible/development.yml --limit islasgeci.dev`) failed with:
+Running `ansible-playbook ansible/development.yml --limit islasgeci.dev`, which the `init-devserver` alias reaches, failed with:
 
 ```
 TASK [Install batcat]
@@ -15,7 +15,7 @@ fatal: [islasgeci.dev]: UNREACHABLE!
 | Attempt | Result |
 |---|---|
 | `make setup_client` (localhost) | ✅ Success |
-| `make setup_server` (islasgeci.dev) | ❌ Timeout on first `become: true` task |
+| `init-devserver` (islasgeci.dev) | ❌ Timeout on first `become: true` task |
 
 SSH connectivity worked fine: the "Gathering Facts" task completed successfully on the remote host. The failure occurred exclusively when Ansible tried to escalate privileges via `become: true`.
 
@@ -74,7 +74,7 @@ This grants the `evaro` user **passwordless sudo**, which bypasses `sudo-rs`'s T
 $ ssh evaro@islasgeci.dev 'sudo -n whoami'
 root
 
-$ make setup_server
+$ ansible-playbook ansible/development.yml --limit islasgeci.dev
 # All 16 tasks completed successfully.
 # (The R 'languageserver' package install timed out after 5 min,
 #  but that is a compile-time issue, not the privilege escalation problem.)
@@ -90,7 +90,7 @@ $ make setup_server
 
 We need to decide where to make this fix permanent:
 
-1. **In this repo (`thin_client`):** Add automation to the `Makefile` or Ansible playbook to configure passwordless sudo for `evaro` as part of `setup_server`. This would re-apply the fix on every provisioning run.
+1. **In this repo (`thin_client`):** Add automation to the `Makefile` or Ansible playbook to configure passwordless sudo for `evaro` as part of the server run. This would re-apply the fix on every provisioning run.
 
 2. **In a separate repo (`../development_server_setup`):** Move the server-provisioning logic (including user setup and sudo configuration) into its own repository that `thin_client` depends on or references. This would be the cleaner separation of concerns, keeping "server setup" concerns out of the "client dev environment" repo.
 
