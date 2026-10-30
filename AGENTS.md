@@ -45,6 +45,8 @@ with `ansible-playbook --syntax-check ansible/development.yml`.
   pattern matches the format that tool prints.
 - Tools installed from snap pin the major version only, or assert presence,
   because snaps refresh themselves.
+- Node comes from apt, never from snap: snap confinement made GitHub Copilot
+  exit with code 1 (commit `35cbbd1`).
 - Removing a task does not uninstall anything from a machine that already ran
   it.
 - `ansible-core`, `git`, `make`, and the inventory are manual prerequisites,
