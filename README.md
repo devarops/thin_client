@@ -1,46 +1,66 @@
-# Cliente liviano para desarrollo remoto
+# Lightweight client for remote development
 
-## Prerequisitos
+## What it does
 
-Si estas usando un cliente liviano es porque ya existe el **servidor de desarrollo**. El servidor de desarrollo es provisto por el **provisionador**.
+Turns a fresh Ubuntu 26.04 laptop into a client that works against the team's
+development server. It installs the tools the team uses, adds the desktop
+applications the team requires, and checks that the machine is ready.
 
-- [Servidor de desarrollo](https://github.com/IslasGECI/development_server_setup)
-- [Provisionador (servidor)](https://github.com/IslasGECI/provisioner)
+## Usage
 
+Run the setup target once, then the check target to confirm the machine is
+ready:
 
-## Configura tu cliente liviano
+```shell
+make setup_client
+make check
+```
 
-1. Crea tu llave SSH con: `ssh-keygen`
-1. Agrega la llave SSH pública de tu estación de trabajo a:
-    - [Bitbucket](https://bitbucket.org/account/settings/ssh-keys/) y
-    - [GitHub](https://github.com/settings/keys/)
-1. Agrega tu llave SSH al agente para hacer _forwarding_
-    - En Linux ejecuta: `ssh-add ~/.ssh/id_ed25519`
-    - En WSL agrega a `~/.bashrc`:
+The targets and what they do are listed in [DOCS.md](DOCS.md). The desktop
+applications are listed under [Desktop applications](#desktop-applications).
+
+## Before you start
+
+You need a laptop with Ubuntu 26.04 LTS, access to the `devarops`
+repositories on GitHub, and the team vault document, which a maintainer
+shares with you.
+
+1. Create your SSH key with: `ssh-keygen`
+1. Add your public SSH key to
+   [Bitbucket](https://bitbucket.org/account/settings/ssh-keys/) and
+   [GitHub](https://github.com/settings/keys/)
+1. Add your key to the agent so it can be forwarded:
+    - On Linux run: `ssh-add ~/.ssh/id_ed25519`
+    - On WSL add this to `~/.bashrc`:
     ```shell
     eval `ssh-agent -s`
     ssh-add ~/.ssh/id_ed25519
     ```
-1. Configura el usuario `evaro` para que `sudo` no requiera contraseña:
+1. Let your user run `sudo` without a password:
     ```shell
     sudo update-alternatives --config editor
     sudo visudo -f /etc/sudoers.d/evaro
     ```
-    agregando esta línea:
+    Add this line to the file:
     ```
     evaro ALL=(ALL) NOPASSWD: ALL
     ```
-1. Instala Ansible, Git y Make:
+1. Install Ansible, Git, and Make:
     ```shell
     sudo apt update && sudo apt install --yes ansible-core git make
     ```
-1. Crea el archivo `/etc/ansible/hosts` con el siguiente contenido:
+1. Create `/etc/ansible/hosts` with this content:
     ```shell
     [development]
     islasgeci.dev ansible_host=islasgeci.dev ansible_user=evaro ansible_become_password="{{ lookup('env', 'DEVSERVER_SUDO_PASSWORD') }}"
     localhost ansible_connection=local
     ```
-1. Configura tu cliente liviano
+
+## Run the project
+
+There is no containerised path: the setup runs directly on the laptop.
+
+1. Clone the repository and provision the machine:
     ```shell
     mkdir --parents ~/repositorios/
     cd ~/repositorios/
@@ -48,20 +68,89 @@ Si estas usando un cliente liviano es porque ya existe el **servidor de desarrol
     cd thin_client
     make setup_client
     ```
-1. Reinincia la terminal.
-1. Instala las aplicaciones de escritorio declaradas en [DESKTOP.md](DESKTOP.md).
-1. Verifica que tu cliente liviano cuenta con el software requerido, incluidas las aplicaciones de escritorio:
+1. Restart the terminal.
+1. Install the desktop applications described under
+   [Desktop applications](#desktop-applications).
+1. Confirm the machine is ready:
     ```shell
     cd ~/repositorios/thin_client
     make check
     ```
-1. Instala [dotfiles](https://github.com/devarops/dotfiles):
+1. Install [dotfiles](https://github.com/devarops/dotfiles):
     ```shell
     cd ~/repositorios/
     git clone git@github.com:devarops/dotfiles.git
     cd dotfiles
     make install
     ```
-1. Agrega tu [bóveda secreta](https://docs.google.com/document/d/1lY7ycXs4J8wp1OyJCmPsvfB7YdQqscqL52cIZxBP6Rw/).
-1. Copia las credenciales hacia el servidor de desarrollo y configura el servidor de desarrollo desde tu cliente liviano: `init-devserver`[.](https://github.com/devarops/dotfiles/blob/develop/.bash_aliases#L9)
-1. Finalmente, entra al servidor de desarrollo con: `ssh devserver`[.](https://github.com/devarops/dotfiles/blob/develop/.ssh/config)
+1. Add your [secret vault](https://docs.google.com/document/d/1lY7ycXs4J8wp1OyJCmPsvfB7YdQqscqL52cIZxBP6Rw/).
+1. Copy your credentials to the development server and configure it from
+   your laptop: `init-devserver`[.](https://github.com/devarops/dotfiles/blob/develop/.bash_aliases#L9)
+1. Enter the development server with:
+   `ssh devserver`[.](https://github.com/devarops/dotfiles/blob/develop/.ssh/config)
+
+### Desktop applications
+
+Install these during step 3. `make check` fails if any of them is missing.
+
+#### Ghostty
+
+Terminal emulator built with GTK 4 and libadwaita. Install it from the snap:
+it is the only source of current releases for Ubuntu 26.04, whose archive
+ships an older version on its own schedule.
+
+```shell
+sudo snap install ghostty --classic
+```
+
+The snap refreshes itself, so the check pins the major version only.
+
+Make it the default terminal in GNOME Settings, or launch it from the
+application grid. Ptyxis is the distribution default and can stay installed.
+
+#### Slack
+
+Desktop client, from the snap published by Slack.
+
+```shell
+sudo snap install slack
+```
+
+A laptop provisioned before this policy may carry the `slack-desktop` Debian
+package instead. Remove it first, because `/usr/bin` precedes `/snap/bin` in
+the default path and the old binary would keep winning:
+
+```shell
+sudo apt remove --yes slack-desktop
+```
+
+Slack updates itself weekly, so the check asserts presence rather than a
+version we cannot meaningfully hold.
+
+#### Emoji picker
+
+`ibus-typing-booster`, from the Ubuntu archive. It provides completion and
+emoji input for the IBus input method.
+
+```shell
+sudo apt update && sudo apt install --yes ibus-typing-booster
+```
+
+Log out and back in, or run `ibus restart`, before the input method appears
+in the keyboard menu.
+
+#### Nerd Fonts
+
+Hack Nerd Font, installed per user from the pinned nerd-fonts release.
+Terminal and editor glyphs depend on it; the theme and prompt assume it is
+present.
+
+```shell
+mkdir --parents ~/.local/share/fonts
+curl --location --output /tmp/Hack.zip \
+  https://github.com/ryanoasis/nerd-fonts/releases/download/v3.5.1/Hack.zip
+unzip -o /tmp/Hack.zip -d ~/.local/share/fonts/Hack
+fc-cache --force
+```
+
+Fonts already installed under `~/.fonts` satisfy the check too.
