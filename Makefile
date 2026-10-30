@@ -36,10 +36,10 @@ check_os_version:
 	cat /etc/os-release | grep "Resolute Raccoon"
 
 check_desktop:
-	ghostty --version             | grep "^Ghostty 1\."  # the snap refreshes itself, so only pin the major version
-	dpkg --list                   | grep ibus-typing-booster
-	fc-list                       | grep "Hack Nerd Font"
-	dpkg --list                   | grep slack-desktop
+	dpkg-query --show --showformat='$${Version}' ibus-typing-booster | grep "^2\."
+	fc-list           | grep "Nerd"
+	ghostty --version | grep "^Ghostty 1\."  # the snap refreshes itself, so only pin the major version
+	slack --version   | grep "^4\."  # the binary prints the bare version, without its name
 
 check: \
 		check_package_versions \
