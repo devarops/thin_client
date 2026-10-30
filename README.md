@@ -25,13 +25,13 @@ You need a laptop with Ubuntu 26.04 LTS, access to the `devarops`
 repositories on GitHub, and the team vault document, which a maintainer
 shares with you.
 
-1. Create your SSH key with: `ssh-keygen`
+1. Create your SSH key with `ssh-keygen`.
 1. Add your public SSH key to
    [Bitbucket](https://bitbucket.org/account/settings/ssh-keys/) and
    [GitHub](https://github.com/settings/keys/)
 1. Add your key to the agent so it can be forwarded:
-    - On Linux run: `ssh-add ~/.ssh/id_ed25519`
-    - On WSL add this to `~/.bashrc`:
+    - On Linux, run `ssh-add ~/.ssh/id_ed25519`
+    - On WSL, add this to `~/.bashrc`:
     ```shell
     eval `ssh-agent -s`
     ssh-add ~/.ssh/id_ed25519
@@ -110,7 +110,7 @@ application grid. Ptyxis is the distribution default and can stay installed.
 
 ### Slack
 
-Desktop client, from Slack's own apt repository.
+Slack is a desktop client, installed from Slack's own apt repository.
 
 ```shell
 curl --fail --silent --show-error --location \
@@ -133,13 +133,13 @@ manager owns the only copy:
 sudo snap remove slack
 ```
 
-The check pins no version, because Slack ships weekly and the repository
-always carries the current one.
+The check pins only the major version, because Slack ships weekly and the
+repository always carries the current one.
 
 ### Emoji picker
 
-`ibus-typing-booster`, from the Ubuntu archive. It provides completion and
-emoji input for the IBus input method.
+The emoji picker is `ibus-typing-booster`, from the Ubuntu archive. It
+provides completion and emoji input for the IBus input method.
 
 ```shell
 sudo apt update && sudo apt install --yes ibus-typing-booster
@@ -150,9 +150,10 @@ in the keyboard menu.
 
 ### Nerd Fonts
 
-Hack Nerd Font, installed per user from the pinned nerd-fonts release.
-Terminal and editor glyphs depend on it; the theme and prompt assume it is
-present.
+Install at least one Nerd Font per user. Terminal and editor glyphs depend on
+it; the theme and prompt assume it is present.
+
+This setup installs the Hack Nerd Font from the pinned nerd-fonts release.
 
 ```shell
 mkdir --parents ~/.local/share/fonts
