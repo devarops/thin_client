@@ -141,3 +141,14 @@
         creates: "{{ ansible_env.HOME }}/.local/bin/pi"
       environment:
         HOME: "{{ ansible_env.HOME }}"
+
+- name: Install terminal information
+  hosts: development
+  tasks:
+    - name: Install Ghostty terminal information
+      ansible.builtin.command:
+        cmd: tic -x -o /usr/share/terminfo -
+        stdin: "{{ lookup('file', 'files/xterm-ghostty.terminfo') }}"
+        creates: /usr/share/terminfo/x/xterm-ghostty
+      become: true
+      when: ansible_connection != 'local'
