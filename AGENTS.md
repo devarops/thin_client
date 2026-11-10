@@ -35,7 +35,7 @@ with `ansible-playbook --syntax-check ansible/development.yml`.
 - `make setup_client` provisions `localhost`.
 - `make check` runs every `check_*` target.
 - `ansible-playbook ansible/development.yml --limit islasgeci.dev`
-  provisions the server; the dotfiles alias `init-devserver` is the
+  provisions the server; the dotfiles alias `devserver-init` is the
   documented way to run it.
 
 ## Conventions

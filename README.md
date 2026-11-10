@@ -85,7 +85,7 @@ There is no containerised path: the setup runs directly on the laptop.
     ```
 1. Add your [secret vault](https://docs.google.com/document/d/1lY7ycXs4J8wp1OyJCmPsvfB7YdQqscqL52cIZxBP6Rw/).
 1. Copy your credentials to the development server and configure it from
-   your laptop: `init-devserver`[.](https://github.com/devarops/dotfiles/blob/develop/.bash_aliases#L9)
+   your laptop: `devserver-init`[.](https://github.com/devarops/dotfiles/blob/develop/.bash_aliases#L12)
 1. Enter the development server with:
    `ssh devserver`[.](https://github.com/devarops/dotfiles/blob/develop/.ssh/config)
 
