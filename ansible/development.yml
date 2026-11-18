@@ -28,11 +28,17 @@
         state: present
         update_cache: true
       become: true
+    # The snap store answers 429 to bursty hosts, and snapd reports that as
+    # "no snap found"; retry until the store accepts the request.
     - name: Install Neovim
       community.general.snap:
         name: nvim
         classic: true
       become: true
+      register: nvim_snap
+      until: nvim_snap is not failed
+      retries: 12
+      delay: 15
     - name: Install Node.js and npm
       ansible.builtin.apt:
         name:
@@ -51,6 +57,10 @@
         name: tmux
         classic: true
       become: true
+      register: tmux_snap
+      until: tmux_snap is not failed
+      retries: 12
+      delay: 15
 
 - name: Install software using npm
   hosts: development
@@ -112,9 +122,17 @@
         name: libxml2-dev
         state: present
       become: true
+    - name: Install R build tools (compilers required to build CRAN packages)
+      ansible.builtin.apt:
+        name: r-base-dev
+        state: present
+        update_cache: true
+      become: true
     - name: Install R 'languageserver' package
       ansible.builtin.command: >
-        Rscript -e "install.packages('languageserver', repos = 'https://cloud.r-project.org')"
+        Rscript
+        -e "install.packages('languageserver', repos = 'https://cloud.r-project.org')"
+        -e "quit(status = !requireNamespace('languageserver', quietly = TRUE))"
       args:
         creates: /usr/local/lib/R/site-library/languageserver
       become: true
@@ -122,25 +140,32 @@
 - name: Install AI Agents
   hosts: development
   tasks:
+    - name: Read the installed opencode version
+      ansible.builtin.command:
+        cmd: "{{ ansible_facts.env.HOME }}/.opencode/bin/opencode --version"
+      register: opencode_version
+      changed_when: false
+      failed_when: false
+    # https://opencode.ai/install only serves OpenCode 1; the check target
+    # requires the OpenCode 2 binary.
     - name: Install opencode
       ansible.builtin.shell: |
-        curl -fsSL https://opencode.ai/install | bash
-      args:
-        creates: "{{ ansible_env.HOME }}/.opencode/bin/opencode"
+        curl -fsSL https://opencode.ai/v2/install | bash
+      when: opencode_version.stdout is not search('^opencode v2\.')
       environment:
-        HOME: "{{ ansible_env.HOME }}"
+        HOME: "{{ ansible_facts.env.HOME }}"
     - name: Ensure opencode is in PATH (bashrc)
       ansible.builtin.lineinfile:
-        path: "{{ ansible_env.HOME }}/.bashrc"
+        path: "{{ ansible_facts.env.HOME }}/.bashrc"
         line: 'export PATH=$PATH:$HOME/.opencode/bin'
         create: true
     - name: Install pi
       ansible.builtin.shell: |
         npm install -g --ignore-scripts --prefix ~/.local @earendil-works/pi-coding-agent
       args:
-        creates: "{{ ansible_env.HOME }}/.local/bin/pi"
+        creates: "{{ ansible_facts.env.HOME }}/.local/bin/pi"
       environment:
-        HOME: "{{ ansible_env.HOME }}"
+        HOME: "{{ ansible_facts.env.HOME }}"
 
 - name: Install terminal information
   hosts: development
