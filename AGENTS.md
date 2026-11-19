@@ -23,6 +23,10 @@ Release 1.0.0 the first time `ansible/development.yml` runs without warnings
 and a second consecutive run changes nothing. Neither run prints `WARNING` or
 `DEPRECATION WARNING`, and the second play recap reports `changed=0`.
 
+The only warning left is the discovered Python interpreter, which
+`/etc/ansible/hosts` must pin with `ansible_python_interpreter`; no repository
+change clears it (commit `39025f1`).
+
 ## Verification
 
 There are no tests. Verification is `make check`, which needs a provisioned
@@ -31,12 +35,11 @@ with `ansible-playbook --syntax-check ansible/development.yml`.
 
 ## Commands
 
-- `make` runs `check`.
-- `make setup_client` provisions `localhost`.
-- `make check` runs every `check_*` target.
 - `ansible-playbook ansible/development.yml --limit islasgeci.dev`
   provisions the server; the dotfiles alias `devserver-init` is the
   documented way to run it.
+- The server's instance, user accounts, and cron come from
+  `IslasGECI/development_server_setup`; this playbook only adds tools.
 
 ## Conventions
 
@@ -46,6 +49,12 @@ with `ansible-playbook --syntax-check ansible/development.yml`.
   Adding or removing one means editing both.
 - The inventory is `/etc/ansible/hosts`, outside the repository, and the
   group `development` holds both hosts. `--limit` chooses which one runs.
+- Tasks that only make sense on the server guard with
+  `when: ansible_connection != 'local'`, because the play also runs on the
+  laptop.
+- The Ghostty `xterm-ghostty` terminfo entry is pinned in `ansible/files/` and
+  installed system-wide on the server only, because `tmux` rejects Ghostty
+  clients without it. Refresh the pin when the snap updates the entry.
 - Version checks are grep patterns over each command's output, so every
   pattern matches the format that tool prints.
 - Tools installed from snap pin the major version only, or assert presence,
@@ -59,8 +68,7 @@ with `ansible-playbook --syntax-check ansible/development.yml`.
 - The inventory maps `ansible_become_password` to `DEVSERVER_SUDO_PASSWORD`,
   which dotfiles loads from the vault. The server's drop-in makes the
   password unnecessary, and `become` works with the variable unset.
-- The R `languageserver` install compiles from source and can exceed five
-  minutes.
+- The R `languageserver` install compiles from source.
 - The server gains passwordless sudo from
   `/etc/sudoers.d/sudo-group-nopasswd`, which `development_server_setup`
   writes (commit `e635cc7`). That file is why `become` works even though

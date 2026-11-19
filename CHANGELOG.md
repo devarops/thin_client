@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- `make check_package_versions` requires Node 24 and npm 11, the versions Ubuntu 26.04 ships.
+- `make setup_client` installs OpenCode 2 instead of OpenCode 1.
+
 ## [0.1.0] - 2026-10-30
 
 ### Changed
