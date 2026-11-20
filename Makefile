@@ -7,10 +7,10 @@ SHELL := /bin/bash
 	check \
 	check_desktop \
 	check_os_version \
-	check_package_versions \
+	check_terminal \
 	setup_client
 
-check_package_versions:
+check_terminal:
 	batcat --version              | grep "^bat 0\."
 	dpkg --list                   | grep libuv1-dev  # required for R laguage server
 	dpkg --list                   | grep libxml2-dev # required for R laguage server
@@ -37,12 +37,14 @@ check_os_version:
 
 check_desktop:
 	dpkg-query --show --showformat='$${Version}' ibus-typing-booster | grep "^2\."
-	fc-list           | grep "Nerd"
-	ghostty --version | grep "^Ghostty 1\."  # the snap refreshes itself, so only pin the major version
-	slack --version   | grep "^4\."  # the binary prints the bare version, without its name
+	fc-list             | grep "Nerd"
+	flameshot --version | grep "^Flameshot v15\."
+	ghostty --version   | grep "^Ghostty 1\."  # the snap refreshes itself, so only pin the major version
+	slack --version     | grep "^4\."  # the binary prints the bare version, without its name
+	voxtype --version   | grep "^voxtype 1\."
 
 check: \
-		check_package_versions \
+		check_terminal \
 		check_os_version \
 		check_desktop
 

@@ -29,9 +29,39 @@ change clears it (commit `39025f1`).
 
 ## Verification
 
-There are no tests. Verification is `make check`, which needs a provisioned
-client and stops at the first missing item. Check the playbook by itself
-with `ansible-playbook --syntax-check ansible/development.yml`.
+There is no test suite. Verification is `make check`, which needs a
+provisioned client and stops at the first missing item. Check the playbook by
+itself with `ansible-playbook --syntax-check ansible/development.yml`.
+
+## Verifying the graphical applications
+
+`make check` proves the graphical declarations are installed; it cannot prove
+they work. Run these after the client is provisioned.
+
+- Flameshot captures the screen:
+
+  ```shell
+  flameshot full -p ~/Pictures/probe.png
+  test -s ~/Pictures/probe.png && rm ~/Pictures/probe.png
+  ```
+
+  The probe writes under `$HOME` because the snap cannot reach `/tmp`. A
+  missing file, or `Unable to capture screen`, means the portal grant in
+  `README.md` was skipped.
+- Voxtype is healthy:
+
+  ```shell
+  voxtype doctor
+  ```
+
+  It exits non-zero when a check fails, and every `✗` line names its fix.
+- The font resolves: `fc-match "Hack Nerd Font"` prints a `HackNerdFont` file.
+- The input method is registered: `ibus list-engine | grep typing-booster`
+  prints its line.
+- Ghostty sees the font: `ghostty +list-fonts | grep -i nerd` prints at least
+  one family.
+- Slack has a session: open it once and confirm you are signed in to the
+  workspace. No command observes this.
 
 ## Commands
 
@@ -47,6 +77,9 @@ with `ansible-playbook --syntax-check ansible/development.yml`.
   with no display. Graphical software, fonts, and input methods belong in
   `README.md` with the user procedure, and in the `check_desktop` target.
   Adding or removing one means editing both.
+- The repository declares software and system infrastructure only: packages,
+  GPU backends, groups, services, and a baseline model. Per-user configuration
+  lives outside it, and no check reads a configuration file.
 - The inventory is `/etc/ansible/hosts`, outside the repository, and the
   group `development` holds both hosts. `--limit` chooses which one runs.
 - Tasks that only make sense on the server guard with

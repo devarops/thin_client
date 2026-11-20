@@ -21,8 +21,8 @@ Parameters: none.
 Errors: exits non-zero at the first missing item and does not report the
 rest.
 
-Notes: runs `check_package_versions`, `check_os_version`, and
-`check_desktop`, in that order.
+Notes: runs `check_terminal`, `check_os_version`, and `check_desktop`, in
+that order.
 
 ### make check_desktop
 
@@ -36,7 +36,7 @@ Verifies that the machine runs Ubuntu 26.04 LTS.
 
 Parameters: none.
 
-### make check_package_versions
+### make check_terminal
 
 Verifies the version of every command-line tool that the playbook installs.
 

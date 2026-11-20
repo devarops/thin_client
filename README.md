@@ -136,6 +136,64 @@ sudo snap remove slack
 The check pins only the major version, because Slack ships weekly and the
 repository always carries the current one.
 
+### Flameshot
+
+Screenshot tool with annotation, installed from the snap.
+
+```shell
+sudo snap install flameshot
+```
+
+Wayland does not let an application read the screen. Flameshot asks the
+screenshot portal, and the portal answers only after the permission is
+granted once. Without it every capture ends with `Unable to capture screen`:
+
+```shell
+dbus-send --session --dest=org.freedesktop.impl.portal.PermissionStore \
+  /org/freedesktop/impl/portal/PermissionStore \
+  org.freedesktop.impl.portal.PermissionStore.SetPermission \
+  string:'screenshot' boolean:true string:'screenshot' \
+  string:'snap.flameshot' array:string:'yes'
+```
+
+Launch it from the application grid or the tray icon. The snap refreshes
+itself, so the check pins the major version only.
+
+### Voxtype
+
+Push-to-talk dictation from the focused window. It transcribes on the local
+machine and types the result with `ydotool`, which needs access to the
+kernel's input devices.
+
+```shell
+curl --fail --location --remote-name \
+  https://github.com/peteonrails/voxtype/releases/download/v1.3.0/voxtype_1.3.0-1_amd64.deb
+sudo apt install --yes ./voxtype_1.3.0-1_amd64.deb
+sudo apt install --yes ydotool
+sudo usermod --append --groups input "$USER"
+```
+
+Log out and back in, so the new group membership applies, then enable the
+services and select the GPU backend:
+
+```shell
+systemctl --user enable --now ydotool
+sudo voxtype setup gpu --enable
+systemctl --user enable --now voxtype
+```
+
+`voxtype setup gpu --status` reports the backend in use and the GPUs it
+found. The package ships no model, so download one:
+
+```shell
+voxtype setup --download --model medium
+```
+
+Hold <kbd>ScrollLock</kbd> while you speak and release it to transcribe.
+Per-user settings live in `~/.config/voxtype/config.toml`; this repository
+does not create that file. The check accepts any `1.x` release, so an upgrade
+replaces the URL with the newer one.
+
 ### Emoji picker
 
 The emoji picker is `ibus-typing-booster`, from the Ubuntu archive. It
