@@ -189,10 +189,9 @@ found. The package ships no model, so download one:
 voxtype setup --download --model medium
 ```
 
-Hold <kbd>ScrollLock</kbd> while you speak and release it to transcribe.
-Per-user settings live in `~/.config/voxtype/config.toml`; this repository
-does not create that file. The check accepts any `1.x` release, so an upgrade
-replaces the URL with the newer one.
+Hold <kbd>ScrollLock</kbd> while you speak and release it to transcribe. The
+settings live in `~/.config/voxtype/config.toml`. The check accepts any `1.x`
+release, so an upgrade replaces the URL with the newer one.
 
 ### Emoji picker
 
