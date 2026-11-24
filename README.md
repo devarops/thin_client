@@ -183,15 +183,25 @@ systemctl --user enable --now voxtype
 ```
 
 `voxtype setup gpu --status` reports the backend in use and the GPUs it
-found. The package ships no model, so download one:
+found. The package ships no model, so download one and select it:
 
 ```shell
 voxtype setup --download --model medium
+cp /etc/voxtype/config.toml ~/.config/voxtype/config.toml
+voxtype setup model --set medium --restart
 ```
+
+The package writes a system-wide default to `/etc/voxtype/config.toml` that
+names the `base.en` model, which it does not ship. Voxtype reads your own
+`~/.config/voxtype/config.toml` when one exists, so the copy is your starting
+point and `--set` makes it point at the downloaded model. Without those two
+commands the download alone leaves `voxtype doctor` failing on the missing
+`base.en` model.
 
 Hold <kbd>ScrollLock</kbd> while you speak and release it to transcribe. The
 settings live in `~/.config/voxtype/config.toml`. The check accepts any `1.x`
-release, so an upgrade replaces the URL with the newer one.
+release, so an upgrade replaces the URL with the newer one; it also runs
+`voxtype doctor`, which passes only while the configured model is downloaded.
 
 ### Emoji picker
 

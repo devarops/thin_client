@@ -10,7 +10,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - `make check_desktop` verifies Flameshot 15 and Voxtype 1, the screenshot and
-  dictation applications that `README.md` declares.
+  dictation applications that `README.md` declares, and runs `voxtype doctor`
+  so a missing model fails the check.
 
 ### Changed
 

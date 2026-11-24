@@ -42,6 +42,7 @@ check_desktop:
 	ghostty --version   | grep "^Ghostty 1\."  # the snap refreshes itself, so only pin the major version
 	slack --version     | grep "^4\."  # the binary prints the bare version, without its name
 	voxtype --version   | grep "^voxtype 1\."
+	voxtype doctor      | grep "whisper model 'medium' installed"
 
 check: \
 		check_terminal \
