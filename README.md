@@ -198,6 +198,20 @@ point and `--set` makes it point at the downloaded model. Without those two
 commands the download alone leaves `voxtype doctor` failing on the missing
 `base.en` model.
 
+After a reinstall, confirm which GPU holds the model:
+
+```shell
+voxtype info accel
+nvidia-smi --query-compute-apps=pid,process_name,used_memory --format=csv
+```
+
+The first command names the backend and the device. A machine with two GPUs
+picks the first one Vulkan lists, which is usually the integrated card. The
+second lists the voxtype process only while the discrete card does the work.
+Skip it on a machine without an NVIDIA card. To move the model to another
+card, `voxtype setup gpu --status` prints the variable and the drop-in that
+select one.
+
 Hold <kbd>ScrollLock</kbd> while you speak and release it to transcribe. The
 settings live in `~/.config/voxtype/config.toml`. The check accepts any `1.x`
 release, so an upgrade replaces the URL with the newer one; it also runs
